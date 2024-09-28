@@ -87,7 +87,12 @@ class main {
 				$realpath_uploaded_file = $realpath_cache.'work/uploaded.'.$ext;
 				$this->px->fs()->save_file($realpath_uploaded_file, $bin);
 
-				if( $request->fileInfo->mime_type == 'application/zip' ){
+				$realpath_xml_file = $realpath_cache.'work/contents.xml';
+				$realpath_assets_dir = $realpath_cache.'work/assets/';
+
+				if( $request->fileInfo->mime_type == 'text/xml' ){
+					$this->px->fs()->rename($realpath_uploaded_file, $realpath_xml_file);
+				}elseif( $request->fileInfo->mime_type == 'application/zip' ){
 					$realpath_unzipped_dir = $realpath_cache.'work/unzipped/';
 					$this->px->fs()->mkdir($realpath_unzipped_dir);
 					$zipArchive = new \ZipArchive();
@@ -98,7 +103,19 @@ class main {
 						$zipArchive->extractTo($realpath_unzipped_dir);
 						// ZIPファイルを閉じる
 						$zipArchive->close();
+
+						$files = $this->px->fs()->ls($realpath_unzipped_dir);
+						foreach( $files as $basename ){
+							if( is_file($realpath_unzipped_dir.$basename) ){
+								if( $this->px->fs()->get_extension($basename) == 'xml' ){
+									$this->px->fs()->rename($realpath_unzipped_dir.$basename, $realpath_xml_file);
+								}
+							}elseif( is_dir($realpath_unzipped_dir.$basename) && $basename == 'assets' ){
+								$this->px->fs()->rename($realpath_unzipped_dir.$basename, $realpath_assets_dir);
+							}
+						}
 					}
+
 				}
 
 				return array(
