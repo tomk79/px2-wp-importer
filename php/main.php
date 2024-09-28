@@ -1,6 +1,6 @@
 <?php
 /**
- * px2-site-search
+ * px2-wp-importer
  */
 namespace picklesFramework2\px2WpImporter;
 
@@ -15,25 +15,14 @@ class main {
 	private $px;
 
 	/**
-	 * プラグイン設定オブジェクト
-	 */
-	private $plugin_conf;
-
-	/**
 	 * constructor
 	 * @param object $px Picklesオブジェクト
-	 * @param object $plugin_conf プラグイン設定
 	 */
-	public function __construct( $px, $plugin_conf ){
+	public function __construct( $px ){
 		$this->px = $px;
-		$this->plugin_conf = $plugin_conf;
 	}
 
 	public function px(){
 		return $this->px;
-	}
-
-	public function plugin_conf(){
-		return $this->plugin_conf;
 	}
 }

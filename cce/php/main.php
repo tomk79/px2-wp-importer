@@ -68,16 +68,11 @@ class main {
 	 */
 	public function gpi($request){
 		switch($request->command){
-			// case 'create_index':
-			//     $result = $this->px->internal_sub_request(
-			//         '/?PX=wp_importer.create_index',
-			//         array(),
-			//         $return_var);
-			//     return array(
-			//         "result" => true,
-			//         "message" => "Creating index: Successful.",
-			//         "stdout" => $result,
-			//     );
+			case 'upload':
+				return array(
+					"result" => true,
+					"message" => "OK",
+				);
 
 		}
 		return false;

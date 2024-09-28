@@ -1,34 +1,140 @@
 window.wpImporterCceFront = function(cceAgent){
-	let $elm = cceAgent.elm();
+	const $ = require('jquery');
+	const it79 = require('iterate79');
+	const $elm = $(cceAgent.elm());
+	$elm.html(bindTwig(
+		require('-!text-loader!./includes/templates/main.twig'),
+		{}
+	));
+	const $preview = $elm.find('.wp-importer__preview');
 
-	$elm.innerHTML = `
-		<p>インポートを更新します。</p>
-		<p><button type="button" class="px2-btn px2-btn--primary cont-btn-create-index">インポート</button></p>
-	`;
+	$elm.find('input[type=file][name=wp-importer__import-file]')
+		.on('change', function(event){
+			var fileInfo = event.target.files[0];
+			var realpathSelected = $(this).val();
 
-	$elm.querySelector('button.cont-btn-create-index')
-		.addEventListener('click', function(){
-			alert('Underconstruction');
-			// const elm = this;
-			// px2style.loading();
-			// elm.setAttribute('disabled', true);
-
-			// cceAgent.pxCmd('/?PX=wp_importer.create_index',
-			// 	{
-			// 		"timeout": 0,
-			// 		"progress": function(data, error){
-			// 			console.log('--- progress:', data, error);
-			// 		}
-			// 	},
-			// 	function(pxCmdStdOut, error){
-			// 		console.log('---- pxCmdStdOut:', pxCmdStdOut, error);
-			// 		if(!error){
-			// 			alert('インデックスを更新しました。');
-			// 		}else{
-			// 			alert('[ERROR] インデックスの更新に失敗しました。');
-			// 		}
-			// 		px2style.closeLoading();
-			// 		elm.removeAttribute('disabled');
-			// 	});
+			if( realpathSelected ){
+				applyFile(fileInfo);
+			}
 		});
+
+	$elm.find('form')
+		.on('submit', function(event){
+			event.preventDefault();
+
+			const fileInfo = {
+				'file': $preview.attr('data-base64'),
+				'ext': $preview.attr('data-extension'),
+				'mime_type': $preview.attr('data-mime-type'),
+				'size': $preview.attr('data-size'),
+			};
+
+			px2style.loading();
+
+			cceAgent.gpi(
+				{
+					"command": 'upload',
+					"fileInfo": fileInfo,
+				},
+				function(res){
+					console.log('---- res:', res);
+					px2style.closeLoading();
+				});
+		});
+
+	/**
+	 * fileAPIからファイルを取り出して反映する
+	 */
+	function applyFile(fileInfo){
+		function readSelectedLocalFile(fileInfo, callback){
+			var reader = new FileReader();
+			reader.onload = function(evt) {
+				callback( evt.target.result );
+			}
+			reader.readAsDataURL(fileInfo);
+		}
+
+		// mod.filename
+		readSelectedLocalFile(fileInfo, function(dataUri){
+			it79.fnc({}, [
+				function(it){
+					it.next();
+					return;
+				},
+				function(it){
+					setPreview({
+						'src': dataUri,
+						'size': fileInfo.size,
+						'ext': getExtension( fileInfo.name ),
+						'mimeType': fileInfo.type,
+						'base64': (function(dataUri){
+							dataUri = dataUri.replace(new RegExp('^data\\:[^\\;]*\\;base64\\,'), '');
+							return dataUri;
+						})(dataUri),
+					});
+					it.next();
+				},
+			]);
+		});
+	}
+
+	/**
+	 * パスから拡張子を取り出して返す
+	 */
+	function getExtension(path){
+		var ext = '';
+		try {
+			var ext = path.replace( new RegExp('^.*?\.([a-zA-Z0-9\_\-]+)$'), '$1' );
+			ext = ext.toLowerCase();
+		} catch (e) {
+			ext = false;
+		}
+		return ext;
+	}
+
+	/**
+	 * プレビューを更新する
+	 */
+	function setPreview(fileInfo){
+		var fileSrc = fileInfo.src;
+		var fileMimeType = fileInfo.mimeType;
+		if( !fileInfo.src || !fileInfo.ext || !fileInfo.size){
+			fileSrc = _imgDummy;
+			fileMimeType = 'image/png';
+		}
+
+		$preview
+			.attr({
+				"data-size": fileInfo.size ,
+				"data-extension": fileInfo.ext,
+				"data-mime-type": fileMimeType ,
+				"data-base64": fileInfo.base64,
+				"data-is-updated": 'yes'
+			})
+			.text(fileMimeType)
+		;
+		return;
+	}
+
+	/**
+	 * Twig テンプレートにデータをバインドする
+	 */
+	function bindTwig( tpl, data ){
+		var rtn = '';
+		var Twig, twig;
+		try {
+			Twig = require('twig'), // Twig module
+			twig = Twig.twig;
+
+			rtn = new twig({
+				'data': tpl,
+				'autoescape': true,
+			}).render(data);
+		} catch(e) {
+			var errorMessage = 'TemplateEngine "Twig" Rendering ERROR.';
+			console.error( errorMessage );
+			rtn = errorMessage;
+		}
+		return rtn;
+	}
 }
