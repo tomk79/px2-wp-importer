@@ -25,13 +25,6 @@ $conf->plugins->px2dt->custom_console_extensions = array(
 ```
 
 
-## PXコマンド - PX Commands
-
-### PX=wp_importer.create_index
-
-インデックスファイルを生成する。
-
-
 ## 変更履歴 - Change Log
 
 ### tomk79/px2-wp-importer v0.1.0 (リリース日未定)
