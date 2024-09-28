@@ -12,7 +12,7 @@
 $ composer require tomk79/px2-wp-importer
 ```
 
-## 2. 管理画面拡張
+### 2. 管理画面拡張
 
 `config.php` に次のような設定を追加します。
 
