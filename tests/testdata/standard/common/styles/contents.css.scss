@@ -8,8 +8,6 @@ html, body{
 	font-weight: bold;
 }
 .contents{
-<?php include(__DIR__.'/normalize/normalize-3.0.1.css'); ?>
-
 	/* ライブラリ同士の衝突吸収 */
 	p, ul, ol, dl{
 		margin: 1em 0;

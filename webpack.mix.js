@@ -33,14 +33,7 @@ mix
 
 
 	// --------------------------------------
-	// px2-site-search.js
-	.js('src/assets/px2-site-search.js', 'public/assets/')
-	.sass('src/assets/px2-site-search.scss', 'public/assets/')
-
-	// --------------------------------------
-	// siteSearchCceFront.js
-	.js('cce/src/siteSearchCceFront.js', 'cce/front/')
-	.sass('cce/src/siteSearchCceFront.scss', 'cce/front/')
-
-	.copyDirectory('public/assets/', 'tests/testdata/standard/common/site_search_index/assets/')
+	// wpImporterCceFront.js
+	.js('cce/src/wpImporterCceFront.js', 'cce/front/')
+	.sass('cce/src/wpImporterCceFront.scss', 'cce/front/')
 ;

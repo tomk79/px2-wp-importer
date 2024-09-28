@@ -2,7 +2,7 @@
 /**
  * px2-site-search
  */
-namespace picklesFramework2\px2SiteSearch;
+namespace picklesFramework2\px2WpImporter;
 
 /**
  * plugins.php

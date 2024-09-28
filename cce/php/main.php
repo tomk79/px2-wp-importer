@@ -1,8 +1,8 @@
 <?php
 /**
- * px2-site-search
+ * px2-wp-importer
  */
-namespace picklesFramework2\px2SiteSearch\cce;
+namespace picklesFramework2\px2WpImporter\cce;
 
 /**
  * main.php
@@ -50,9 +50,9 @@ class main{
     public function get_client_resource_list(){
         $rtn = array();
         $rtn['css'] = array();
-        array_push($rtn['css'], 'siteSearchCceFront.css');
+        array_push($rtn['css'], 'wpImporterCceFront.css');
         $rtn['js'] = array();
-        array_push($rtn['js'], 'siteSearchCceFront.js');
+        array_push($rtn['js'], 'wpImporterCceFront.js');
         return $rtn;
     }
 
@@ -60,7 +60,7 @@ class main{
      * 管理画面を初期化するためのJavaScript関数名を取得する
      */
     public function get_client_initialize_function(){
-        return 'window.siteSearchCceFront';
+        return 'window.wpImporterCceFront';
     }
 
     /**
@@ -70,7 +70,7 @@ class main{
         switch($request->command){
             case 'create_index':
                 $result = $this->px->internal_sub_request(
-                    '/?PX=site_search.create_index',
+                    '/?PX=wp_importer.create_index',
                     array(),
                     $return_var);
                 return array(

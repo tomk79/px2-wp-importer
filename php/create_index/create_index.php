@@ -2,9 +2,9 @@
 /**
  * px2-site-search
  */
-namespace picklesFramework2\px2SiteSearch\create_index;
-use picklesFramework2\px2SiteSearch\plugins;
-use picklesFramework2\px2SiteSearch\main;
+namespace picklesFramework2\px2WpImporter\create_index;
+use picklesFramework2\px2WpImporter\plugins;
+use picklesFramework2\px2WpImporter\main;
 
 /**
  * PX Commands "site_search.create_index"
@@ -1202,7 +1202,7 @@ class create_index {
 	 * @return object $html Simple HTML DOM オブジェクト
 	 */
 	private function parse_html( $src ){
-		$html = \picklesFramework2\px2SiteSearch\str_get_html(
+		$html = \picklesFramework2\px2WpImporter\str_get_html(
 			$src,
 			false, // $lowercase
 			false, // $forceTagsClosed

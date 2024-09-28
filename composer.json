@@ -1,5 +1,5 @@
 {
-    "name": "tomk79/px2-site-search",
+    "name": "tomk79/px2-wp-importer",
     "description": "",
     "keywords": ["pickles2"],
     "license": "MIT",
@@ -51,10 +51,10 @@
             "php/simple_html_dom.php"
         ],
         "psr-4": {
-            "picklesFramework2\\px2SiteSearch\\": [
+            "picklesFramework2\\px2WpImporter\\": [
                 "php"
             ],
-            "picklesFramework2\\px2SiteSearch\\cce\\": [
+            "picklesFramework2\\px2WpImporter\\cce\\": [
                 "cce/php"
             ]
         }

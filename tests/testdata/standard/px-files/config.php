@@ -13,7 +13,7 @@ return call_user_func( function(){
 	// project
 
 	/** サイト名 */
-	$conf->name = 'px2-site-search';
+	$conf->name = 'px2-wp-importer';
 	/** コピーライト表記 */
 	$conf->copyright = 'Tomoya Koyanagi';
 	/** ドメイン(本番環境のドメイン) */
@@ -193,40 +193,6 @@ return call_user_func( function(){
 	 * サイトマップ読み込みの後、コンテンツ実行の前に実行するプラグインを設定します。
 	 */
 	$conf->funcs->before_content = array(
-		// PX=site_search
-		picklesFramework2\px2SiteSearch\register::before_content(array(
-			// 検索エンジンの種類
-			// 省略時: 'client'
-			'engine_type' => 'client',
-			// 'engine_type' => 'paprika',
-
-			// クライアント用アセットを書き出す先のディレクトリ
-			// 省略時: '/common/site_search_index/'
-			'path_client_assets_dir' => '/common/site_search_index/',
-
-			// 非公開データの書き出し先ディレクトリ
-			// 省略時: '/_sys/site_search_index/'
-			'path_private_data_dir' => '/_sys/site_search_index/',
-
-			// インデックスから除外するパス
-			// 複数のパス(完全一致)、または正規表現で定義します。
-			// 省略時: 除外しない
-			'paths_ignore' => array(
-				'/ignored/this_is_perfect_match_ignored/ignored.html', // 完全一致 による設定
-				'/^\/ignored\/(?:this_is_ignored_too\/ignored\.html|index\.html)$/i', // 正規表現による設定
-			),
-
-			// コンテンツエリアを抽出するセレクタ
-			// 省略時: '.contents'
-			'contents_area_selector' => '.contents',
-
-			// コンテンツから除外する要素のセレクタ
-			// 省略時: 除外しない
-			'ignored_contents_selector' => array(
-				'.contents-ignored',
-			),
-		)),
-
 		// PX=api
 		picklesFramework2\commands\api::register(),
 
@@ -409,8 +375,8 @@ return call_user_func( function(){
 
 
 	$conf->plugins->px2dt->custom_console_extensions = array(
-	    'px2-site-search' => array(
-			'class_name' => 'picklesFramework2\px2SiteSearch\cce\main()',
+	    'px2-wp-importer' => array(
+			'class_name' => 'picklesFramework2\px2WpImporter\cce\main()',
 			'capability' => array('manage'),
 		),
 	);

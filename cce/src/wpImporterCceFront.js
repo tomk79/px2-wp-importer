@@ -1,4 +1,4 @@
-window.siteSearchCceFront = function(cceAgent){
+window.wpImporterCceFront = function(cceAgent){
 	let $elm = cceAgent.elm();
 
 	$elm.innerHTML = `
@@ -12,7 +12,7 @@ window.siteSearchCceFront = function(cceAgent){
 			px2style.loading();
 			elm.setAttribute('disabled', true);
 
-			cceAgent.pxCmd('/?PX=site_search.create_index',
+			cceAgent.pxCmd('/?PX=wp_importer.create_index',
 				{
 					"timeout": 0,
 					"progress": function(data, error){

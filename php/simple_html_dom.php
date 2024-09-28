@@ -37,7 +37,7 @@
  * @package PlaceLocalInclude
  * @subpackage simple_html_dom
  */
-namespace picklesFramework2\px2SiteSearch;
+namespace picklesFramework2\px2WpImporter;
 
 /**
  * All of the Defines for the classes below.

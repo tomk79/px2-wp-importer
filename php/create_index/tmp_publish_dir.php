@@ -2,7 +2,7 @@
 /**
  * px2-site-search
  */
-namespace picklesFramework2\px2SiteSearch\create_index;
+namespace picklesFramework2\px2WpImporter\create_index;
 
 /**
  * PX Commands "publish" Temporaly Publish Directory Manager

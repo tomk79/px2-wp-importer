@@ -2,7 +2,7 @@
 /**
  * px2-site-search
  */
-namespace picklesFramework2\px2SiteSearch\create_index;
+namespace picklesFramework2\px2WpImporter\create_index;
 
 /**
  * PX Commands "publish" path resolver
@@ -85,7 +85,7 @@ class path_resolver{
 
 
 		// HTMLをパース
-		$html = \picklesFramework2\px2SiteSearch\str_get_html(
+		$html = \picklesFramework2\px2WpImporter\str_get_html(
 			mb_convert_encoding( $src, DEFAULT_TARGET_CHARSET, $detect_encoding ) ,
 			false, // $lowercase
 			false, // $forceTagsClosed

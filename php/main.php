@@ -2,7 +2,7 @@
 /**
  * px2-site-search
  */
-namespace picklesFramework2\px2SiteSearch;
+namespace picklesFramework2\px2WpImporter;
 use TeamTNT\TNTSearch\TNTSearch;
 
 /**
@@ -70,11 +70,11 @@ class main {
 
 		// --------------------------------------
 		// client side script
-		$px2SiteSearchJs = $this->px->fs()->read_file(__DIR__.'/../public/assets/px2-site-search.js');
-		$px2SiteSearchJs = preg_replace('/\$____engine_type____/s', $this->plugin_conf()->engine_type, $px2SiteSearchJs);
-		$px2SiteSearchJs = preg_replace('/\$____data-path-controot____/s', $this->px->conf()->path_controot, $px2SiteSearchJs);
-		$px2SiteSearchJs = preg_replace('/\$____lang____/s', $this->px->lang(), $px2SiteSearchJs);
-		$this->px->fs()->save_file($realpath_public_base.'assets/px2-site-search.js', $px2SiteSearchJs);
+		$px2WpImporterJs = $this->px->fs()->read_file(__DIR__.'/../public/assets/px2-site-search.js');
+		$px2WpImporterJs = preg_replace('/\$____engine_type____/s', $this->plugin_conf()->engine_type, $px2WpImporterJs);
+		$px2WpImporterJs = preg_replace('/\$____data-path-controot____/s', $this->px->conf()->path_controot, $px2WpImporterJs);
+		$px2WpImporterJs = preg_replace('/\$____lang____/s', $this->px->lang(), $px2WpImporterJs);
+		$this->px->fs()->save_file($realpath_public_base.'assets/px2-site-search.js', $px2WpImporterJs);
 
 		// --------------------------------------
 		// initialize FlexSearch
