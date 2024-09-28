@@ -27,6 +27,7 @@ window.wpImporterCceFront = function(cceAgent){
 				'ext': $preview.attr('data-extension'),
 				'mime_type': $preview.attr('data-mime-type'),
 				'size': $preview.attr('data-size'),
+				'base64': $preview.attr('data-base64'),
 			};
 
 			px2style.loading();
