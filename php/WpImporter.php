@@ -77,6 +77,20 @@ class WpImporter {
 				// 記事タイトル
 				$title = (string) $item->title;
 
+				// URL
+				$link = (string) $item->link;
+				$parsed_url = parse_url(trim($link));
+				$path_contents = $parsed_url['path'];
+				if(preg_match('/\/$/is',$path_contents)){
+					$path_contents .= 'index.html';
+				}
+
+				// description
+				$description = (string) $item->description;
+
+				// ファイル名を作成
+				$realpath_content = $this->realpath_dist.'contents'.$path_contents;
+
 				// 記事の種類
 				$postType = $item->children('wp', true)->post_type;
 
@@ -90,51 +104,41 @@ class WpImporter {
 					// --------------------------------------
 					// ブログ記事
 
-					// ファイル名を作成
-					$fileName = $this->realpath_dist.'contents/article-'.(++$articleCount).'.html';
-
-					// HTMLファイルのコンテンツを構築
-					$htmlContent = "
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>{$title} - {$postType}</title>
-		<meta charset='UTF-8' />
-	</head>
-	<body>
-		<h1>{$title}</h1>
-		<p><em>Published on: {$pubDate}</em></p>
-		<div>{$content}</div>
-	</body>
-</html>";
+					$blogmap_definition = $this->get_blogmap_definition();
+					$blogmap_definition['path'] = $path_contents;
+					$blogmap_definition['title'] = $title;
+					$blogmap_definition['release_date'] = $pubDate;
+					$blogmap_definition['update_date'] = $pubDate;
+					$sitemap_definition['article_summary'] = $description;
+					file_put_contents(
+						$this->realpath_dist.'blogs/blog_imported.csv',
+						$this->fs->mk_csv(array($blogmap_definition)),
+						FILE_APPEND
+					);
 
 					// HTMLファイルとして保存
-					$this->fs->save_file($fileName, $htmlContent);
+					$this->fs->mkdir_r(dirname($realpath_content));
+					$this->fs->save_file($realpath_content, $content);
 
 				}elseif( $postType == 'page' ){
 					// --------------------------------------
 					// 固定ページ
 
-					// ファイル名を作成
-					$fileName = $this->realpath_dist.'contents/page-'.(++$articleCount).'.html';
+					$sitemap_definition = $this->get_sitemap_definition();
+					$sitemap_definition['path'] = $path_contents;
+					$sitemap_definition['title'] = $title;
+					$sitemap_definition['description'] = $description;
+					$sitemap_definition['list_flg'] = 1;
 
-					// HTMLファイルのコンテンツを構築
-					$htmlContent = "
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>{$title} - {$postType}</title>
-		<meta charset='UTF-8' />
-	</head>
-	<body>
-		<h1>{$title}</h1>
-		<p><em>Published on: {$pubDate}</em></p>
-		<div>{$content}</div>
-	</body>
-</html>";
+					file_put_contents(
+						$this->realpath_dist.'sitemaps/sitemap_imported.csv',
+						$this->fs->mk_csv(array($sitemap_definition)),
+						FILE_APPEND
+					);
 
 					// HTMLファイルとして保存
-					$this->fs->save_file($fileName, $htmlContent);
+					$this->fs->mkdir_r(dirname($realpath_content));
+					$this->fs->save_file($realpath_content, $content);
 				}
 
 			}
