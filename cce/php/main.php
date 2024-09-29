@@ -72,28 +72,58 @@ class main {
 	 * General Purpose Interface (汎用API)
 	 */
 	public function gpi($request){
+		$realpath_cache = $this->main->realpath_private_cache();
+		$realpath_chunks = $realpath_cache.'_chunks/';
+		$realpath_file_info = $realpath_cache.'_chunks/fileInfo.json';
+		$realpath_uploaded = $realpath_cache.'_uploaded/';
+
 		switch($request->command){
-			case 'upload':
+			case 'upload_init':
+				if( is_dir($realpath_chunks) ){
+					$this->px->fs()->rm($realpath_chunks);
+				}
+				if( is_dir($realpath_uploaded) ){
+					$this->px->fs()->rm($realpath_uploaded);
+				}
+				$this->px->fs()->mkdir($realpath_chunks);
+				$this->px->fs()->mkdir($realpath_uploaded);
+				$this->px->fs()->save_file($realpath_file_info, json_encode($request->fileInfo));
 
-				$realpath_cache = $this->main->realpath_private_cache();
+				return array(
+					"result" => true,
+					"message" => "OK",
+				);
 
-				if( is_dir($realpath_cache.'work/') ){
-					$this->px->fs()->rm($realpath_cache.'work/');
+			case 'upload_chunk':
+
+				$realpath_uploaded_file = $realpath_cache.'_chunks/_'.intval($request->num ?? 0).'.txt';
+				$this->px->fs()->save_file($realpath_uploaded_file, trim($request->chunk ?? ''));
+
+				return array(
+					"result" => true,
+					"message" => "OK",
+				);
+
+			case 'upload_finalize':
+				$realpath_xml_file = $realpath_uploaded.'contents.xml';
+				$realpath_assets_dir = $realpath_uploaded.'assets/';
+
+				$fileInfo = json_decode( file_get_contents( $realpath_file_info) );
+
+				$base64 = '';
+				for($i = 0; $i < $fileInfo->chunkCount; $i++){
+					$base64 .= file_get_contents($realpath_chunks.'_'.intval($i).'.txt');
 				}
 
-				$this->px->fs()->mkdir($realpath_cache.'work/');
-				$bin = base64_decode($request->fileInfo->base64);
-				$ext = ($request->fileInfo->ext ?? 'bin');
-				$realpath_uploaded_file = $realpath_cache.'work/uploaded.'.$ext;
+				$bin = base64_decode($base64);
+				$ext = ($fileInfo->ext ?? 'bin');
+				$realpath_uploaded_file = $realpath_chunks.'uploaded.'.$ext;
 				$this->px->fs()->save_file($realpath_uploaded_file, $bin);
 
-				$realpath_xml_file = $realpath_cache.'work/contents.xml';
-				$realpath_assets_dir = $realpath_cache.'work/assets/';
-
-				if( $request->fileInfo->mime_type == 'text/xml' ){
+				if( $fileInfo->mime_type == 'text/xml' ){
 					$this->px->fs()->rename($realpath_uploaded_file, $realpath_xml_file);
-				}elseif( $request->fileInfo->mime_type == 'application/zip' ){
-					$realpath_unzipped_dir = $realpath_cache.'work/unzipped/';
+				}elseif( $fileInfo->mime_type == 'application/zip' ){
+					$realpath_unzipped_dir = $realpath_chunks.'unzipped/';
 					$this->px->fs()->mkdir($realpath_unzipped_dir);
 					$zipArchive = new \ZipArchive();
 

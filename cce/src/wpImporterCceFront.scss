@@ -1,0 +1,15 @@
+.wp-importer {
+    &__progress {
+        display: block;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        overflow: hidden;
+        position: relative;
+        &-bar {
+            display: block;
+            width: 0px;
+            height: 16px;
+            background-color: #66b;
+        }
+    }
+}

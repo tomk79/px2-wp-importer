@@ -21,26 +21,95 @@ window.wpImporterCceFront = function(cceAgent){
 	$elm.find('form')
 		.on('submit', function(event){
 			event.preventDefault();
+			px2style.loading();
 
 			const fileInfo = {
-				'file': $preview.attr('data-base64'),
 				'ext': $preview.attr('data-extension'),
 				'mime_type': $preview.attr('data-mime-type'),
 				'size': $preview.attr('data-size'),
-				'base64': $preview.attr('data-base64'),
 			};
+			const fullBase64 = $preview.attr('data-base64');
 
-			px2style.loading();
+			const base64chunks = [];
+			let indexNumber = 0;
+			const chunkSize = 2 * 1000 * 1000;
+			while (fullBase64.length > chunkSize*indexNumber) {
+				base64chunks.push(fullBase64.substring(chunkSize*indexNumber, chunkSize*(indexNumber+1)));
+				indexNumber++;
+			}
 
-			cceAgent.gpi(
-				{
-					"command": 'upload',
-					"fileInfo": fileInfo,
+			fileInfo.chunkCount = base64chunks.length;
+
+			let modal;
+			const $body = $(`<div>
+				<div class="wp-importer__progress"><div class="wp-importer__progress-bar"></div></div>
+			</div>`);
+			const $progressBar = $body.find('.wp-importer__progress-bar');
+
+			it79.fnc({}, [
+				function(it){
+					px2style.modal({
+						body: $body,
+						buttons: [],
+					}, function(_modal){
+						modal = _modal;
+						modal.closable(false);
+						it.next();
+					});
+					return;
 				},
-				function(res){
-					console.log('---- res:', res);
-					px2style.closeLoading();
-				});
+				function(it){
+					cceAgent.gpi(
+						{
+							"command": 'upload_init',
+							"fileInfo": fileInfo,
+						},
+						function(res){
+							it.next();
+						});
+					return;
+				},
+				function(it){
+					it79.ary(
+						base64chunks,
+						function(it2, chunk, num){
+							num = Number(num);
+							cceAgent.gpi(
+								{
+									"command": 'upload_chunk',
+									"num": num,
+									"chunk": chunk,
+								},
+								function(res){
+									console.log(`--chunk ${num+1}/${fileInfo.chunkCount}`, res, ((num+1)/fileInfo.chunkCount)*100);
+									$progressBar.width(`${((num+1)/fileInfo.chunkCount)*100}%`);
+									it2.next();
+								});
+							return;
+						},
+						function(){
+							it.next();
+							return;
+						},
+					);
+					return;
+				},
+				function(it){
+					cceAgent.gpi(
+						{
+							"command": 'upload_finalize',
+						},
+						function(res){
+							it.next();
+							setTimeout(function(){
+								modal.close();
+								px2style.closeLoading();
+							} , 3000);
+						});
+					return;
+				},
+			]);
+
 		});
 
 	/**
