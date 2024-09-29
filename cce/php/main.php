@@ -82,12 +82,10 @@ class main {
 			case 'upload_init':
 				// --------------------------------------
 				// ファイルのアップロードを初期化する
-				if( is_dir($realpath_chunks) ){
-					$this->px->fs()->rm($realpath_chunks);
-				}
-				if( is_dir($realpath_uploaded) ){
-					$this->px->fs()->rm($realpath_uploaded);
-				}
+				$this->px->fs()->rm($realpath_chunks);
+				$this->px->fs()->rm($realpath_uploaded);
+				$this->px->fs()->rm($realpath_tmp_dist);
+
 				$this->px->fs()->mkdir($realpath_chunks);
 				$this->px->fs()->mkdir($realpath_uploaded);
 				$this->px->fs()->save_file($realpath_file_info, json_encode($request->fileInfo));
@@ -101,7 +99,7 @@ class main {
 				// --------------------------------------
 				// ファイルの断片のアップロードを受け付ける
 
-				$realpath_uploaded_file = $realpath_cache.'_chunks/_'.intval($request->num ?? 0).'.txt';
+				$realpath_uploaded_file = $realpath_chunks.'_'.intval($request->num ?? 0).'.txt';
 				$this->px->fs()->save_file($realpath_uploaded_file, trim($request->chunk ?? ''));
 
 				return array(

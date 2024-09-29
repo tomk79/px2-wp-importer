@@ -81,8 +81,11 @@ class WpImporter {
 				$link = (string) $item->link;
 				$parsed_url = parse_url(trim($link));
 				$path_contents = $parsed_url['path'];
-				if(preg_match('/\/$/is',$path_contents)){
+				if(preg_match('/\/$/s',$path_contents)){
 					$path_contents .= 'index.html';
+				}
+				if(!preg_match('/\.html?$/s',$path_contents)){
+					$path_contents .= '.html';
 				}
 
 				// description
