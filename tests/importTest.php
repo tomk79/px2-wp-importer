@@ -16,10 +16,14 @@ class importTest extends PHPUnit\Framework\TestCase {
 	 * インポートテスト
 	 */
 	public function testImport(){
+
+		$this->fs->rm(__DIR__."/testdata/imports/pattern01/dist/");
+		$this->fs->mkdir(__DIR__."/testdata/imports/pattern01/dist/");
+
 		$wpImporter = new \picklesFramework2\px2WpImporter\WpImporter(array(
-			"xml" => "./testdata/imports/pattern01/input/contents.xml",
-			"assets" => "./testdata/imports/pattern01/input/assets/",
-			"dist" => "./testdata/imports/pattern01/dist/",
+			"xml" => __DIR__."/testdata/imports/pattern01/input/contents.xml",
+			"assets" => __DIR__."/testdata/imports/pattern01/input/assets/",
+			"dist" => __DIR__."/testdata/imports/pattern01/dist/",
 		));
 		$wpImporter->start();
 
