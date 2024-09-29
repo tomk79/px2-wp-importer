@@ -12,12 +12,17 @@ class ContentsProcessor {
 	private $fs;
 	private $conditions;
 
+	private $realpath_assets;
+	private $realpath_dist;
+
 	/**
 	 * constructor
 	 */
-	public function __construct( $conditions = null ){
+	public function __construct( $conditions ){
 		$this->fs = new \tomk79\filesystem();
 		$this->conditions = (object) $conditions;
+		$this->realpath_assets = $this->conditions->assets;
+		$this->realpath_dist = $this->conditions->dist;
 	}
 
 	/**

@@ -13,6 +13,7 @@ class WpImporter {
 	private $conditions;
 
 	private $realpath_contents_xml;
+	private $realpath_assets;
 	private $realpath_dist;
 
 	/**
@@ -22,6 +23,7 @@ class WpImporter {
 		$this->fs = new \tomk79\filesystem();
 		$this->conditions = (object) $conditions;
 		$this->realpath_contents_xml = $this->conditions->xml;
+		$this->realpath_assets = $this->conditions->assets;
 		$this->realpath_dist = $this->conditions->dist;
 	}
 
@@ -104,7 +106,7 @@ class WpImporter {
 				$pubDate = (string) $item->pubDate;
 
 				if( strlen($content ?? '') && ($postType == 'post' || $postType == 'page') ){
-					$contentsProcessor = new ContentsProcessor();
+					$contentsProcessor = new ContentsProcessor($this->conditions);
 					$content = $contentsProcessor->resolve_images($content);
 				}
 
