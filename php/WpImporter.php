@@ -103,6 +103,11 @@ class WpImporter {
 				// 日付 (オプションで使用できます)
 				$pubDate = (string) $item->pubDate;
 
+				if( strlen($content ?? '') && ($postType == 'post' || $postType == 'page') ){
+					$contentsProcessor = new ContentsProcessor();
+					$content = $contentsProcessor->resolve_images($content);
+				}
+
 				if( $postType == 'post' ){
 					// --------------------------------------
 					// ブログ記事
