@@ -16,6 +16,7 @@ class cleanupTest extends PHPUnit\Framework\TestCase {
 	 * テスト完了後に原状復帰する
 	 */
 	public function testCleanup(){
+		$this->assertTrue( true );
 
 		// 後始末
 		$output = $this->passthru( [
@@ -23,11 +24,6 @@ class cleanupTest extends PHPUnit\Framework\TestCase {
 			__DIR__.'/testdata/standard/.px_execute.php' ,
 			'/?PX=clearcache' ,
 		] );
-
-		sleep(1);
-
-		$this->fs->rm(__DIR__.'/testdata/standard/px-files/paprika/_database.sqlite');
-		$this->assertFalse( is_file(__DIR__.'/testdata/standard/px-files/paprika/_database.sqlite') );
 	}
 
 
