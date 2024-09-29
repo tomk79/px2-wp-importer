@@ -43,7 +43,10 @@ class WpImporter {
 		foreach( $sitemap_definition as $sitemap_definition_key=>$default_value ){
 			$sitemap_header_row[$sitemap_definition_key] = '* '.$sitemap_definition_key;
 		}
-		$this->fs->save_file($this->realpath_dist.'sitemaps/sitemap_imported.csv', $this->fs->mk_csv(array($sitemap_header_row)));
+		$this->fs->save_file(
+			$this->realpath_dist.'sitemaps/sitemap_imported.csv',
+			$this->fs->mk_csv(array($sitemap_header_row))
+		);
 
 		// ブログマップを初期化
 		$blogmap_definition = $this->get_blogmap_definition();
@@ -51,7 +54,10 @@ class WpImporter {
 		foreach( $blogmap_definition as $blogmap_definition_key=>$default_value ){
 			$blogmap_header_row[$blogmap_definition_key] = '* '.$blogmap_definition_key;
 		}
-		$this->fs->save_file($this->realpath_dist.'blogs/blog_imported.csv', $this->fs->mk_csv(array($blogmap_header_row)));
+		$this->fs->save_file(
+			$this->realpath_dist.'blogs/blog_imported.csv',
+			$this->fs->mk_csv(array($blogmap_header_row))
+		);
 
 
 		// XMLReaderのインスタンス作成
@@ -71,22 +77,29 @@ class WpImporter {
 				// 記事タイトル
 				$title = (string) $item->title;
 
+				// 記事の種類
+				$postType = $item->children('wp', true)->post_type;
+
 				// 記事本文 (CDATAセクションとして保存されている可能性があります)
 				$content = (string) $item->children('content', true)->encoded;
 
 				// 日付 (オプションで使用できます)
 				$pubDate = (string) $item->pubDate;
 
-				// ファイル名を作成
-				$fileName = $this->realpath_dist.'contents/article-'.(++$articleCount).'.html';
+				if( $postType == 'post' ){
+					// --------------------------------------
+					// ブログ記事
 
-				// HTMLファイルのコンテンツを構築
-				$htmlContent = "
+					// ファイル名を作成
+					$fileName = $this->realpath_dist.'contents/article-'.(++$articleCount).'.html';
+
+					// HTMLファイルのコンテンツを構築
+					$htmlContent = "
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>{$title}</title>
-		<meta charset='UTF-8'>
+		<title>{$title} - {$postType}</title>
+		<meta charset='UTF-8' />
 	</head>
 	<body>
 		<h1>{$title}</h1>
@@ -95,8 +108,35 @@ class WpImporter {
 	</body>
 </html>";
 
-				// HTMLファイルとして保存
-				file_put_contents($fileName, $htmlContent);
+					// HTMLファイルとして保存
+					$this->fs->save_file($fileName, $htmlContent);
+
+				}elseif( $postType == 'page' ){
+					// --------------------------------------
+					// 固定ページ
+
+					// ファイル名を作成
+					$fileName = $this->realpath_dist.'contents/page-'.(++$articleCount).'.html';
+
+					// HTMLファイルのコンテンツを構築
+					$htmlContent = "
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{$title} - {$postType}</title>
+		<meta charset='UTF-8' />
+	</head>
+	<body>
+		<h1>{$title}</h1>
+		<p><em>Published on: {$pubDate}</em></p>
+		<div>{$content}</div>
+	</body>
+</html>";
+
+					// HTMLファイルとして保存
+					$this->fs->save_file($fileName, $htmlContent);
+				}
+
 			}
 		}
 
