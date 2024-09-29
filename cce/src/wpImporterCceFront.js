@@ -81,7 +81,6 @@ window.wpImporterCceFront = function(cceAgent){
 									"chunk": chunk,
 								},
 								function(res){
-									console.log(`--chunk ${num+1}/${fileInfo.chunkCount}`, res, ((num+1)/fileInfo.chunkCount)*100);
 									$progressBar.width(`${((num+1)/fileInfo.chunkCount)*100}%`);
 									it2.next();
 								});
@@ -101,12 +100,27 @@ window.wpImporterCceFront = function(cceAgent){
 						},
 						function(res){
 							it.next();
-							setTimeout(function(){
-								modal.close();
-								px2style.closeLoading();
-							} , 3000);
 						});
 					return;
+				},
+				function(it){
+					cceAgent.gpi(
+						{
+							"command": 'import',
+						},
+						function(res){
+							it.next();
+						});
+					return;
+				},
+				function(it){
+					setTimeout(function(){
+						it.next();
+					} , 3000);
+				},
+				function(){
+					modal.close();
+					px2style.closeLoading();
 				},
 			]);
 

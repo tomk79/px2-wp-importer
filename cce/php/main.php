@@ -73,12 +73,15 @@ class main {
 	 */
 	public function gpi($request){
 		$realpath_cache = $this->main->realpath_private_cache();
-		$realpath_chunks = $realpath_cache.'_chunks/';
-		$realpath_file_info = $realpath_cache.'_chunks/fileInfo.json';
-		$realpath_uploaded = $realpath_cache.'_uploaded/';
+		$realpath_chunks = $realpath_cache.'chunks/';
+		$realpath_file_info = $realpath_cache.'chunks/fileInfo.json';
+		$realpath_uploaded = $realpath_cache.'uploaded/';
+		$realpath_tmp_dist = $realpath_cache.'dist/';
 
 		switch($request->command){
 			case 'upload_init':
+				// --------------------------------------
+				// ファイルのアップロードを初期化する
 				if( is_dir($realpath_chunks) ){
 					$this->px->fs()->rm($realpath_chunks);
 				}
@@ -95,6 +98,8 @@ class main {
 				);
 
 			case 'upload_chunk':
+				// --------------------------------------
+				// ファイルの断片のアップロードを受け付ける
 
 				$realpath_uploaded_file = $realpath_cache.'_chunks/_'.intval($request->num ?? 0).'.txt';
 				$this->px->fs()->save_file($realpath_uploaded_file, trim($request->chunk ?? ''));
@@ -105,6 +110,8 @@ class main {
 				);
 
 			case 'upload_finalize':
+				// --------------------------------------
+				// ファイルの断片を統合する
 				$realpath_xml_file = $realpath_uploaded.'contents.xml';
 				$realpath_assets_dir = $realpath_uploaded.'assets/';
 
@@ -153,6 +160,20 @@ class main {
 					"message" => "OK",
 				);
 
+			case 'import':
+				// --------------------------------------
+				// インポートを実行する
+				$WpImporter = new \picklesFramework2\px2WpImporter\WpImporter(array(
+					"xml" => $realpath_uploaded."contents.xml",
+					"assets" => $realpath_uploaded."assets/",
+					"dist" => $realpath_tmp_dist,
+				));
+				$WpImporter->start();
+
+				return array(
+					"result" => true,
+					"message" => "OK",
+				);
 		}
 		return false;
 	}

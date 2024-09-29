@@ -1,8 +1,7 @@
 <?php
 /**
- * Test for pickles2/px2-paprika
+ * Test for tomk79/px2-wp-importer
  */
-
 class mainTest extends PHPUnit\Framework\TestCase {
 	private $fs;
 
