@@ -858,7 +858,15 @@ content. -->
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="http://localhost:3000/wp-content/uploads/2024/09/image-1024x842.png" alt="" class="wp-image-54"/></figure>
+<figure class="wp-block-image size-large"><img src="http://localhost:3000/wp-content/uploads/2024/09/image.png" alt="" class="wp-image-54"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="/assets/photo009_thumb.jpg" alt="" class="wp-image-54"/></figure>
+<!-- /wp:image -->
+
+<!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
+<figure class="wp-block-image size-large"><img src="/assets/photo010_thumb.jpg" alt="" class="wp-image-54"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:paragraph -->

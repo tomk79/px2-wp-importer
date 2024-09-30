@@ -82,19 +82,19 @@ class WpImporter {
 				// URL
 				$link = (string) $item->link;
 				$parsed_url = parse_url(trim($link));
-				$path_contents = $parsed_url['path'];
-				if(preg_match('/\/$/s',$path_contents)){
-					$path_contents .= 'index.html';
+				$path_content = $parsed_url['path'];
+				if(preg_match('/\/$/s',$path_content)){
+					$path_content .= 'index.html';
 				}
-				if(!preg_match('/\.html?$/s',$path_contents)){
-					$path_contents .= '.html';
+				if(!preg_match('/\.html?$/s',$path_content)){
+					$path_content .= '.html';
 				}
 
 				// description
 				$description = (string) $item->description;
 
 				// ファイル名を作成
-				$realpath_content = $this->realpath_dist.'contents'.$path_contents;
+				$realpath_content = $this->realpath_dist.'contents'.$path_content;
 
 				// 記事の種類
 				$postType = $item->children('wp', true)->post_type;
@@ -107,7 +107,14 @@ class WpImporter {
 
 				if( strlen($content ?? '') && ($postType == 'post' || $postType == 'page') ){
 					$contentsProcessor = new ContentsProcessor($this->conditions);
-					$content = $contentsProcessor->resolve_images($content);
+					$content = $contentsProcessor->resolve_images(
+						$content,
+						array(
+							'path' => $path_content,
+							'realpath' => $realpath_content,
+							'path_files' => '{$dirname}/{$filename}_files/',
+						)
+					);
 				}
 
 				if( $postType == 'post' ){
@@ -115,7 +122,7 @@ class WpImporter {
 					// ブログ記事
 
 					$blogmap_definition = $this->get_blogmap_definition();
-					$blogmap_definition['path'] = $path_contents;
+					$blogmap_definition['path'] = $path_content;
 					$blogmap_definition['title'] = $title;
 					$blogmap_definition['release_date'] = $pubDate;
 					$blogmap_definition['update_date'] = $pubDate;
@@ -135,7 +142,7 @@ class WpImporter {
 					// 固定ページ
 
 					$sitemap_definition = $this->get_sitemap_definition();
-					$sitemap_definition['path'] = $path_contents;
+					$sitemap_definition['path'] = $path_content;
 					$sitemap_definition['title'] = $title;
 					$sitemap_definition['description'] = $description;
 					$sitemap_definition['list_flg'] = 1;
