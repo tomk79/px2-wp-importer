@@ -3,7 +3,7 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="<?= $px->h($px->path_files("/assets/image.png")) ?>" alt="" class="wp-image-54"/></figure>
+<figure class="wp-block-image size-large"><img src="<?= $px->h($px->path_files("/assets/remote_image.png")) ?>" alt="" class="wp-image-54"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
@@ -13,6 +13,12 @@
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
 <figure class="wp-block-image size-large"><img src="<?= $px->h($px->path_files("/assets/photo010_thumb.jpg")) ?>" alt="" class="wp-image-54"/></figure>
 <!-- /wp:image -->
+
+<h2>File</h2>
+<p><a class="px2-btn px2-btn--download" href="<?= $px->h($px->path_files("/assets/sample-data.xlsx")) ?>" download="sample-data.xlsx">Download: sample-data.xlsx</a></p>
+
+<h2>Audio</h2>
+<p><audio controls src="<?= $px->h($px->path_files("/assets/soundwave.mp3")) ?>"></audio></p>
 
 <!-- wp:paragraph -->
 <p>クリップボードから、Cmd+Vして貼り付けることができました。</p>

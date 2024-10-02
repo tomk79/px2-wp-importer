@@ -858,7 +858,7 @@ content. -->
 <!-- /wp:paragraph -->
 
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
-<figure class="wp-block-image size-large"><img src="http://localhost:3000/wp-content/uploads/2024/09/image.png" alt="" class="wp-image-54"/></figure>
+<figure class="wp-block-image size-large"><img src="http://localhost:3000/wp-content/uploads/2024/09/remote_image.png" alt="" class="wp-image-54"/></figure>
 <!-- /wp:image -->
 
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
@@ -868,6 +868,12 @@ content. -->
 <!-- wp:image {"id":54,"sizeSlug":"large","linkDestination":"none"} -->
 <figure class="wp-block-image size-large"><img src="/assets/photo010_thumb.jpg" alt="" class="wp-image-54"/></figure>
 <!-- /wp:image -->
+
+<h2>File</h2>
+<p>/assets/sample-data.xlsx</p>
+
+<h2>Audio</h2>
+<p>/assets/soundwave.mp3</p>
 
 <!-- wp:paragraph -->
 <p>クリップボードから、Cmd+Vして貼り付けることができました。</p>
