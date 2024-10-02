@@ -99,6 +99,9 @@ class WpImporter {
 				// 記事の種類
 				$postType = $item->children('wp', true)->post_type;
 
+				// 記事の種類
+				$author = $item->children('dc', true)->creator;
+
 				// 記事本文 (CDATAセクションとして保存されている可能性があります)
 				$content = (string) $item->children('content', true)->encoded;
 
@@ -127,6 +130,8 @@ class WpImporter {
 					$blogmap_definition['release_date'] = $pubDate;
 					$blogmap_definition['update_date'] = $pubDate;
 					$sitemap_definition['article_summary'] = $description;
+					$sitemap_definition['author'] = $author;
+
 					file_put_contents(
 						$this->realpath_dist.'blogs/blog_imported.csv',
 						$this->fs->mk_csv(array($blogmap_definition)),
@@ -146,6 +151,7 @@ class WpImporter {
 					$sitemap_definition['title'] = $title;
 					$sitemap_definition['description'] = $description;
 					$sitemap_definition['list_flg'] = 1;
+					$sitemap_definition['author'] = $author;
 
 					file_put_contents(
 						$this->realpath_dist.'sitemaps/sitemap_imported.csv',
@@ -185,6 +191,8 @@ class WpImporter {
 			'category_top_flg' => null,
 			'role' => null,
 			'proc_type' => null,
+
+			'author' => null,
 		);
 	}
 	private function get_blogmap_definition(){
@@ -195,6 +203,8 @@ class WpImporter {
 			'update_date' => null,
 			'article_summary' => null,
 			'article_keywords' => null,
+
+			'author' => null,
 		);
 	}
 

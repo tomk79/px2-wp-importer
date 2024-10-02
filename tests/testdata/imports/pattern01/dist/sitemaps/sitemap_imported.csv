@@ -1,6 +1,6 @@
-"* path","* content","* id","* title","* title_breadcrumb","* title_h1","* title_label","* title_full","* logical_path","* list_flg","* layout","* orderby","* keywords","* description","* category_top_flg","* role","* proc_type"
-"/sample-page/index.html",,,"サンプルページ",,,,,,"1",,,,,,,
-"/privacy-policy/index.html",,,"プライバシーポリシー",,,,,,"1",,,,,,,
-"/%e5%9b%ba%e5%ae%9a%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%87%e3%83%a2/index.html",,,"固定ページのデモ",,,,,,"1",,,,,,,
-"/%e5%9b%ba%e5%ae%9a%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%87%e3%83%a2/%e3%82%b9%e3%83%bc%e3%83%91%e3%83%bc%e3%83%87%e3%83%a2/index.html",,,"スーパーデモ",,,,,,"1",,,,,,,
-"/%e5%9b%ba%e5%ae%9a%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%87%e3%83%a2/%e3%82%b9%e3%83%bc%e3%83%91%e3%83%bc%e3%83%87%e3%83%a2/%e3%82%b5%e3%82%a4%e3%82%ad%e3%83%83%e3%82%af%e3%83%87%e3%83%a2/index.html",,,"サイキックデモ",,,,,,"1",,,,,,,
+"* path","* content","* id","* title","* title_breadcrumb","* title_h1","* title_label","* title_full","* logical_path","* list_flg","* layout","* orderby","* keywords","* description","* category_top_flg","* role","* proc_type","* author"
+"/sample-page/index.html",,,"サンプルページ",,,,,,"1",,,,,,,,"tomk79@gmail.com"
+"/privacy-policy/index.html",,,"プライバシーポリシー",,,,,,"1",,,,,,,,"tomk79@gmail.com"
+"/%e5%9b%ba%e5%ae%9a%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%87%e3%83%a2/index.html",,,"固定ページのデモ",,,,,,"1",,,,,,,,"tomk79@gmail.com"
+"/%e5%9b%ba%e5%ae%9a%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%87%e3%83%a2/%e3%82%b9%e3%83%bc%e3%83%91%e3%83%bc%e3%83%87%e3%83%a2/index.html",,,"スーパーデモ",,,,,,"1",,,,,,,,"tomk79@gmail.com"
+"/%e5%9b%ba%e5%ae%9a%e3%83%9a%e3%83%bc%e3%82%b8%e3%81%ae%e3%83%87%e3%83%a2/%e3%82%b9%e3%83%bc%e3%83%91%e3%83%bc%e3%83%87%e3%83%a2/%e3%82%b5%e3%82%a4%e3%82%ad%e3%83%83%e3%82%af%e3%83%87%e3%83%a2/index.html",,,"サイキックデモ",,,,,,"1",,,,,,,,"tomk79@gmail.com"
