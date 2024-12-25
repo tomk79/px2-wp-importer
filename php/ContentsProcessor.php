@@ -135,7 +135,6 @@ class ContentsProcessor {
 					);
 
 					$ext = preg_replace('/^.*\.([a-zA-Z0-9\-\_]+)$/', '$1', $asset_basename) ?? '';
-var_dump($ext);
 					switch( strtolower($ext) ){
 						case 'mp4':
 						case 'mov':
